@@ -20,6 +20,8 @@
 #include "Player_Cluster.h"
 #include "Player_Random.h"
 
+#include "Player_KiterDPSEvo.h"
+
 namespace SparCraft
 {
     

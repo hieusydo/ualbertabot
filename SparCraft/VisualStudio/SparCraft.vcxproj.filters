@@ -112,6 +112,12 @@
     <ClCompile Include="..\source\SparCraftException.cpp">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\Player_KiterDPSEvo.cpp">
+      <Filter>simulation\players\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Population_Kiter.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\AlphaBetaSearch.h">
@@ -260,6 +266,12 @@
     </ClInclude>
     <ClInclude Include="..\source\SparCraftException.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Player_KiterDPSEvo.h">
+      <Filter>simulation\players\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Population_Kiter.h">
+      <Filter>util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

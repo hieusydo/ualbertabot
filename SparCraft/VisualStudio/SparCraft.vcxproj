@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,7 +22,7 @@
     <ProjectGuid>{66236439-5968-4756-B2E7-8A29BEA99078}</ProjectGuid>
     <RootNamespace>StarcraftBuildOrderSearch</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -37,10 +37,10 @@
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -122,6 +122,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\Population_Kiter.h" />
     <ClInclude Include="..\source\Action.h" />
     <ClInclude Include="..\source\AllPlayers.h" />
     <ClInclude Include="..\source\AlphaBetaMove.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="..\source\Player_Cluster.h" />
     <ClInclude Include="..\source\Player_Kiter.h" />
     <ClInclude Include="..\source\Player_KiterDPS.h" />
+    <ClInclude Include="..\source\Player_KiterDPSEvo.h" />
     <ClInclude Include="..\source\Player_Kiter_NOKDPS.h" />
     <ClInclude Include="..\source\Player_NOKDPS.h" />
     <ClInclude Include="..\source\Player_PortfolioGreedySearch.h" />
@@ -173,6 +175,7 @@
     <ClInclude Include="..\source\WeaponProperties.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\Population_Kiter.cpp" />
     <ClCompile Include="..\source\Action.cpp" />
     <ClCompile Include="..\source\AllPlayers.cpp" />
     <ClCompile Include="..\source\AlphaBetaMove.cpp" />
@@ -194,6 +197,7 @@
     <ClCompile Include="..\source\Player_Cluster.cpp" />
     <ClCompile Include="..\source\Player_Kiter.cpp" />
     <ClCompile Include="..\source\Player_KiterDPS.cpp" />
+    <ClCompile Include="..\source\Player_KiterDPSEvo.cpp" />
     <ClCompile Include="..\source\Player_Kiter_NOKDPS.cpp" />
     <ClCompile Include="..\source\Player_NOKDPS.cpp" />
     <ClCompile Include="..\source\Player_PortfolioGreedySearch.cpp" />
