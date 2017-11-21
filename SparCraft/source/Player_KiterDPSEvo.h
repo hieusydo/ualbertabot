@@ -6,18 +6,22 @@
 namespace SparCraft
 {
 	/*----------------------------------------------------------------------
-	| Kiter DPS Player
+	| Kiter DPS Evolution Player 
 	|----------------------------------------------------------------------
 	| Chooses an action with following priority:
+	| 1) Use evolution to find a good safeDistance
 	| 1) If it can attack, ATTACK highest DPS/HP enemy unit in range
 	| 2) If it cannot attack:
-	|    a) If it is in range to attack an enemy, move away from closest one
-	|    b) If it is not in range of enemy, MOVE towards closest one
+	|    a) If it is not in range of safeDist, move away from closest one
+	|    b) If it is in range of safeDist, MOVE towards closest one
 	`----------------------------------------------------------------------*/
 	class Player_KiterDPSEvo : public Player
 	{
+	private:
+		size_t _safeDist;
 	public:
 		Player_KiterDPSEvo(const IDType & playerID);
+		//Player_KiterDPSEvo(const IDType & playerID, size_t safeDist);
 		void getMoves(GameState & state, const MoveArray & moves, std::vector<Action> & moveVec);
 		IDType getType() { return PlayerModels::KiterDPSEvo; }
 	};

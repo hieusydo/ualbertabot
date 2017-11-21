@@ -7,109 +7,123 @@ using namespace SparCraft;
 Player_KiterDPSEvo::Player_KiterDPSEvo (const IDType & playerID) 
 {
 	_playerID = playerID;
+	_safeDist = rand();
 }
+
+//Player_KiterDPSEvo::Player_KiterDPSEvo(const IDType & playerID, size_t safeDist) {
+//	_playerID = playerID;
+//	_safeDist = safeDist;
+//}
+
 
 void Player_KiterDPSEvo::getMoves(GameState & state, const MoveArray & moves, std::vector<Action> & moveVec)
 {
 	moveVec.clear();
 
 	// initialize population of safeDistances
-	Population_Kiter p = Population_Kiter(moves);
+	size_t popSize = 10;
+	size_t numGen = 100;
+	Population_Kiter k = Population_Kiter(popSize, numGen);
 
-	// while within time limit and number of Epoc, keep evolving and mutating
+	//size_t safeDist = k.evolveSafeDist();
 
-	// get best safeDistances
+	for (IDType u = 0; u < moves.numUnits(); ++u)
+	{
+		bool foundAction = false;
+		IDType actionMoveIndex = 0;
+		IDType furthestMoveIndex = 0;
+		IDType closestMoveIndex	= 0;
+		double actionHighestDPS	= 0;
+		
+		size_t furthestMoveDist = 0;
+		unsigned long long closestMoveDist = std::numeric_limits<unsigned long long>::max();
 
-	IDType u = 0; // from moves.numUnits()
-	size_t bestMoveIndex = 0; // from moves.numMoves(u)
-	moveVec.push_back(moves.getMove(u, bestMoveIndex));
+		const Unit & ourUnit = state.getUnit(_playerID, u);
+		const Unit & closestUnit = ourUnit.canHeal() ? state.getClosestOurUnit(_playerID, u) : state.getClosestEnemyUnit(_playerID, u);
 
-	//std::cout << "In getMoves\n";
-	//moveVec.clear();
-	//for (IDType u = 0; u < moves.numUnits(); ++u)
-	//{
-	//	bool foundAction = false;
-	//	IDType actionMoveIndex = 0;
-	//	IDType furthestMoveIndex = 0;
-	//	IDType closestMoveIndex	= 0;
-	//	double actionHighestDPS	= 0;
-	//	
-	//	size_t furthestMoveDist = 0;
-	//	unsigned long long closestMoveDist = std::numeric_limits<unsigned long long>::max();
+		for (IDType m = 0; m < moves.numMoves(u); ++m)
+		{
+			const Action move = moves.getMove(u, m);
+				
+			if (move.type() == ActionTypes::ATTACK)
+			{
+				const Unit & target	= state.getUnit(state.getEnemy(move.player()), move.index());
+				double dpsHPValue = target.dpf() / target.currentHP();
 
-	//	const Unit & ourUnit = state.getUnit(_playerID, u);
-	//	const Unit & closestUnit = ourUnit.canHeal() ? state.getClosestOurUnit(_playerID, u) : state.getClosestEnemyUnit(_playerID, u);
+				if (dpsHPValue > actionHighestDPS)
+				{
+					actionHighestDPS = dpsHPValue;
+					actionMoveIndex = m;
+					foundAction = true;
+				}
+			}
+			else if (move.type() == ActionTypes::HEAL)
+			{
+				const Unit & target = state.getUnit(move.player(), move.index());
+				double dpsHPValue = target.dpf() / target.currentHP();
 
-	//	for (IDType m = 0; m < moves.numMoves(u); ++m)
-	//	{
-	//		const Action move = moves.getMove(u, m);
-	//			
-	//		if (move.type() == ActionTypes::ATTACK)
-	//		{
-	//			const Unit & target	= state.getUnit(state.getEnemy(move.player()), move.index());
-	//			double dpsHPValue = target.dpf() / target.currentHP();
+				if (dpsHPValue > actionHighestDPS)
+				{
+					actionHighestDPS = dpsHPValue;
+					actionMoveIndex = m;
+					foundAction = true;
+				}
+			}
+			else if (move.type() == ActionTypes::MOVE)
+			{
+				Position ourDest = Position(ourUnit.x() + Constants::Move_Dir[move.index()][0], ourUnit.y() + Constants::Move_Dir[move.index()][1]);
+				size_t dist = closestUnit.getDistanceSqToPosition(ourDest, state.getTime());
 
-	//			if (dpsHPValue > actionHighestDPS)
-	//			{
-	//				actionHighestDPS = dpsHPValue;
-	//				actionMoveIndex = m;
-	//				foundAction = true;
-	//			}
-	//		}
-	//		else if (move.type() == ActionTypes::HEAL)
-	//		{
-	//			const Unit & target = state.getUnit(move.player(), move.index());
-	//			double dpsHPValue = target.dpf() / target.currentHP();
+				if (dist > furthestMoveDist)
+				{
+					furthestMoveDist = dist;
+					furthestMoveIndex = m;
+				}
 
-	//			if (dpsHPValue > actionHighestDPS)
-	//			{
-	//				actionHighestDPS = dpsHPValue;
-	//				actionMoveIndex = m;
-	//				foundAction = true;
-	//			}
-	//		}
-	//		else if (move.type() == ActionTypes::MOVE)
-	//		{
-	//			Position ourDest = Position(ourUnit.x() + Constants::Move_Dir[move.index()][0], ourUnit.y() + Constants::Move_Dir[move.index()][1]);
-	//			size_t dist = closestUnit.getDistanceSqToPosition(ourDest, state.getTime());
+				if (dist < closestMoveDist)
+				{
+					closestMoveDist = dist;
+					closestMoveIndex = m;
+				}
+			}
+		}
 
-	//			if (dist > furthestMoveDist)
-	//			{
-	//				furthestMoveDist = dist;
-	//				furthestMoveIndex = m;
-	//			}
+		// the move we will be returning
+		size_t bestMoveIndex = 0;
 
-	//			if (dist < closestMoveDist)
-	//			{
-	//				closestMoveDist = dist;
-	//				closestMoveIndex = m;
-	//			}
-	//		}
-	//	}
+		// if we have an attack move we will use that one
+		if (foundAction)
+		{
+			bestMoveIndex = actionMoveIndex;
+		}
+		// otherwise use the closest move to the opponent
+		else
+		{
+			// if we are in attack range of the unit, back up
 
-	//	// the move we will be returning
-	//	size_t bestMoveIndex = 0;
+			Position ourPos = Position(ourUnit.x(), ourUnit.y());
+			size_t dist = closestUnit.getDistanceSqToPosition(ourPos, state.getTime());
+			// change for evo
+			if (dist < _safeDist){
+				bestMoveIndex = furthestMoveIndex;
+			}
+			// otherwise get back into the fight
+			else
+			{
+				bestMoveIndex = closestMoveIndex;
+			}
 
-	//	// if we have an attack move we will use that one
-	//	if (foundAction)
-	//	{
-	//		bestMoveIndex = actionMoveIndex;
-	//	}
-	//	// otherwise use the closest move to the opponent
-	//	else
-	//	{
-	//		// if we are in attack range of the unit, back up
-	//		if (ourUnit.canAttackTarget(closestUnit, state.getTime()))
-	//		{
-	//			bestMoveIndex = furthestMoveIndex;
-	//		}
-	//		// otherwise get back into the fight
-	//		else
-	//		{
-	//			bestMoveIndex = closestMoveIndex;
-	//		}
-	//	}
-	//	
-	//	moveVec.push_back(moves.getMove(u, bestMoveIndex));
-	//}
+			//if (ourUnit.canAttackTarget(closestUnit, state.getTime()))
+			//{
+			//	bestMoveIndex = furthestMoveIndex;
+			//}
+			//// otherwise get back into the fight
+			//else
+			//{
+			//	bestMoveIndex = closestMoveIndex;
+			//}
+		}
+		
+		moveVec.push_back(moves.getMove(u, bestMoveIndex));
+	}
 }

@@ -113,10 +113,10 @@
       <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="..\source\Player_KiterDPSEvo.cpp">
-      <Filter>simulation\players\script</Filter>
+      <Filter>simulation\players\evolution</Filter>
     </ClCompile>
     <ClCompile Include="..\source\Population_Kiter.cpp">
-      <Filter>util</Filter>
+      <Filter>evolution</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,10 +268,10 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\source\Player_KiterDPSEvo.h">
-      <Filter>simulation\players\script</Filter>
+      <Filter>simulation\players\evolution</Filter>
     </ClInclude>
     <ClInclude Include="..\source\Population_Kiter.h">
-      <Filter>util</Filter>
+      <Filter>evolution</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +310,12 @@
     </Filter>
     <Filter Include="data">
       <UniqueIdentifier>{c8b3aadc-390f-460b-af33-29a0570bb914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="simulation\players\evolution">
+      <UniqueIdentifier>{392a3340-c19d-4264-9d52-27fbfccc5358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="evolution">
+      <UniqueIdentifier>{6d7a0697-bd5d-4fde-8aa5-e350cccfbfc0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
