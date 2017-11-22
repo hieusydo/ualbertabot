@@ -14,7 +14,9 @@ namespace SparCraft
 	private:
 		size_t _popSize;
 		size_t _numGen;
-		std::vector<IDType> _populations;
+
+		// is using heap too memory intensive?
+		std::vector<Player_KiterDPSEvo*> _populations;
 
 	protected:
 		// initialize method for population of many KiterDPSEvo
@@ -24,11 +26,12 @@ namespace SparCraft
 		void mutate();
 
 		// evaluation method
-		int eval();
+		int eval(const GameState & state);
 
 	public:
 		Population_Kiter(size_t popSize, size_t numGen);
-		size_t evolveSafeDist();
+		size_t evolveSafeDist(const GameState & state);
+		~Population_Kiter();
 	};
 
 }

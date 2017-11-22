@@ -22,6 +22,7 @@ namespace SparCraft
 	public:
 		Player_KiterDPSEvo(const IDType & playerID);
 		//Player_KiterDPSEvo(const IDType & playerID, size_t safeDist);
+		void setSafeDist(size_t d);
 		void getMoves(GameState & state, const MoveArray & moves, std::vector<Action> & moveVec);
 		IDType getType() { return PlayerModels::KiterDPSEvo; }
 	};

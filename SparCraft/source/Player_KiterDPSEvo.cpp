@@ -7,14 +7,16 @@ using namespace SparCraft;
 Player_KiterDPSEvo::Player_KiterDPSEvo (const IDType & playerID) 
 {
 	_playerID = playerID;
-	_safeDist = rand();
+	_safeDist = 0; // default set it to 0, will set to random when initializing the population
 }
 
 //Player_KiterDPSEvo::Player_KiterDPSEvo(const IDType & playerID, size_t safeDist) {
 //	_playerID = playerID;
 //	_safeDist = safeDist;
 //}
-
+void Player_KiterDPSEvo::setSafeDist(size_t d) {
+	_safeDist = d;
+}
 
 void Player_KiterDPSEvo::getMoves(GameState & state, const MoveArray & moves, std::vector<Action> & moveVec)
 {
@@ -23,9 +25,9 @@ void Player_KiterDPSEvo::getMoves(GameState & state, const MoveArray & moves, st
 	// initialize population of safeDistances
 	size_t popSize = 10;
 	size_t numGen = 100;
-	Population_Kiter k = Population_Kiter(popSize, numGen);
+	//Population_Kiter k = Population_Kiter(popSize, numGen);
 
-	//size_t safeDist = k.evolveSafeDist();
+	//size_t safeDist = k.evolveSafeDist(state);
 
 	for (IDType u = 0; u < moves.numUnits(); ++u)
 	{
@@ -126,4 +128,11 @@ void Player_KiterDPSEvo::getMoves(GameState & state, const MoveArray & moves, st
 		
 		moveVec.push_back(moves.getMove(u, bestMoveIndex));
 	}
+}
+
+Population_Kiter::~Population_Kiter() {
+	for (Player_KiterDPSEvo* p : _populations) {
+		delete p;
+	}
+	_populations.clear();
 }
