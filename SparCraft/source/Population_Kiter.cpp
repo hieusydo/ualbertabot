@@ -1,5 +1,6 @@
 #include "Population_Kiter.h"
 #include <queue>
+#include <random>
 #include <utility> 
 #include "Common.h"
 using namespace SparCraft;
@@ -14,9 +15,13 @@ Population_Kiter::Population_Kiter(size_t popSize, size_t numGen) : _popSize(pop
 
 // initialize method for population of many KiterDPSEvo
 void Population_Kiter::initialize() {
+	std::random_device rd; // get a random seed from the OS entropy device
+	std::mt19937_64 eng(rd()); // use the 64-bit Mersenne Twister 19937 generator with the rd seed
+	std::uniform_int_distribution<unsigned long long> distr; // define the distribution
+
 	for (size_t i = 0; i < _popSize; ++i) {
 		Player_KiterDPSEvo* kiter = new Player_KiterDPSEvo(PlayerModels::KiterDPSEvo);
-		kiter->setSafeDist(rand());
+		kiter->setSafeDist(distr(eng));
 		_populations.push_back(kiter);
 	}
 }
@@ -55,16 +60,14 @@ size_t Population_Kiter::evolveSafeDist(const GameState & state) {
 
 	// initialize a genePool - priority queue of Player_Kiter http://www.cplusplus.com/reference/queue/priority_queue/
 	// write comparator for Player_Kiter
-	std::priority_queue<std::pair<Player_KiterDPSEvo*, int>, std::vector<std::pair<Player_KiterDPSEvo*, int>>, KiterComparator> genePool;
+	std::priority_queue<Chromosome, std::vector<Chromosome>, KiterComparator> genePool;
 
 	// evaluate the baseline population
 	// and add to genePool
-	int i = 0;
 	for (Player_KiterDPSEvo* p : _populations) {
-		int kiterScore = eval(p, state) + i;
-		std::pair<Player_KiterDPSEvo*, int> chromosome(p, kiterScore);
+		int kiterScore = eval(p, state);
+		Chromosome chromosome(p, kiterScore);
 		genePool.push(chromosome);
-		i += 10;
 	}
 
 	bestGene = genePool.top();

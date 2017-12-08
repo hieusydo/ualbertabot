@@ -475,7 +475,12 @@ void SearchExperiment::addPlayer(const std::string & line)
 	{
 		players[playerID].push_back(PlayerPtr(new Player_KiterDPSEvo(playerID)));
 	}
-	
+
+	else if (playerModelID == PlayerModels::NOKDPSEvo)
+	{
+		players[playerID].push_back(PlayerPtr(new Player_NOKDPSEvo(playerID)));
+	}
+
 	else if (playerModelID == PlayerModels::Kiter_NOKDPS)			
     { 
         players[playerID].push_back(PlayerPtr(new Player_Kiter_NOKDPS(playerID))); 

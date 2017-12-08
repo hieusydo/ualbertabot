@@ -177,6 +177,7 @@
     <ClInclude Include="..\source\UnitProperties.h" />
     <ClInclude Include="..\source\UnitScriptData.h" />
     <ClInclude Include="..\source\WeaponProperties.h" />
+    <ClInclude Include="..\source\Player_NOKDPSEvo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Population_Kiter.cpp" />
@@ -218,6 +219,7 @@
     <ClCompile Include="..\source\UnitProperties.cpp" />
     <ClCompile Include="..\source\UnitScriptData.cpp" />
     <ClCompile Include="..\source\WeaponProperties.cpp" />
+    <ClCompile Include="..\source\Player_NOKDPSEvo.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -105,12 +105,12 @@ void Player_KiterDPSEvo::getMoves(GameState & state, const MoveArray & moves, st
 		// otherwise use the closest move to the opponent
 		else
 		{
-			// if we are in attack range of the unit, back up
-
-			Position ourPos = Position(ourUnit.x(), ourUnit.y());
-			size_t dist = closestUnit.getDistanceSqToPosition(ourPos, state.getTime());
+			// Hieu's change
+			//Position ourPos = Position(ourUnit.x(), ourUnit.y());
+			size_t dist = ourUnit.getDistanceSqToUnit(closestUnit, state.getTime());
+			//std::cout << dist << " " << _safeDist << "\n";
 			// change for evo
-			if (dist < _safeDist){
+			if (dist < _safeDist && closestUnit.canAttackTarget(ourUnit, state.getTime())){
 				bestMoveIndex = furthestMoveIndex;
 			}
 			// otherwise get back into the fight
@@ -119,7 +119,8 @@ void Player_KiterDPSEvo::getMoves(GameState & state, const MoveArray & moves, st
 				bestMoveIndex = closestMoveIndex;
 			}
 
-			//if (ourUnit.canAttackTarget(closestUnit, state.getTime()))
+			//// if we are in attack range of the unit, back up
+			//if (closestUnit.canAttackTarget(ourUnit, state.getTime()))
 			//{
 			//	bestMoveIndex = furthestMoveIndex;
 			//}

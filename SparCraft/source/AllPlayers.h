@@ -21,6 +21,7 @@
 #include "Player_Random.h"
 
 #include "Player_KiterDPSEvo.h"
+#include "Player_NOKDPSEvo.h"
 
 namespace SparCraft
 {
