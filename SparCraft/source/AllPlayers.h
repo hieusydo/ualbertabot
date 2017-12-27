@@ -32,5 +32,7 @@ namespace AllPlayers
 {
     Player * getPlayer(const IDType & playerID, const IDType & type);
     PlayerPtr getPlayerPtr(const IDType & playerID, const IDType & type);
+
+	std::string getPlayerName(const IDType & type);
 }
 }

@@ -69,16 +69,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>SparCraft</TargetName>
-    <LibraryPath>C:\Users\Hieu Do\Desktop\ualbertabot\SparCraft\lib;$(LibraryPath)</LibraryPath>
-    <SourcePath>C:\Users\Hieu Do\Desktop\ualbertabot\SparCraft\source;$(SourcePath)</SourcePath>
+    <LibraryPath>C:\ualbertabot\SparCraft\lib;C:\Users\Hieu Do\Desktop\ualbertabot\SparCraft\lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>C:\ualbertabot\SparCraft\source;C:\Users\Hieu Do\Desktop\ualbertabot\SparCraft\source;$(SourcePath)</SourcePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>C:\libraries\SDL2-2.0.7\include;C:\libraries\SDL2_image-2.0.2;$(IncludePath)</IncludePath>
+    <IncludePath>C:\SDL2_image-2.0.2;C:\SDL2-2.0.7\include;C:\libraries\SDL2-2.0.7\include;C:\libraries\SDL2_image-2.0.2;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>SparCraft</TargetName>
-    <IncludePath>C:\SDL2_image-2.0.2;C:\SDL2-2.0.7\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\dshieu96%40gmail.com\Google Drive\NYU\Academics\Honor Thesis\ualbertabot\SparCraft\lib;$(LibraryPath)</LibraryPath>
-    <SourcePath>C:\Users\dshieu96%40gmail.com\Google Drive\NYU\Academics\Honor Thesis\ualbertabot\SparCraft\source;$(SourcePath)</SourcePath>
+    <IncludePath>C:\SDL2_image-2.0.2;C:\SDL2-2.0.7\include;C:\SDL2_image-2.0.2;C:\SDL2-2.0.7\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\ualbertabot\SparCraft\lib;C:\Users\dshieu96%40gmail.com\Google Drive\NYU\Academics\Honor Thesis\ualbertabot\SparCraft\lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>C:\ualbertabot\SparCraft\source;C:\Users\dshieu96%40gmail.com\Google Drive\NYU\Academics\Honor Thesis\ualbertabot\SparCraft\source;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

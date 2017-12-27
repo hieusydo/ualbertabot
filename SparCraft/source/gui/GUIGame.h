@@ -20,6 +20,9 @@ class GUIGame
 
     void drawGame();
     void drawInfo();
+
+	void drawPlayerName();
+
     void drawHPBars();
     void drawUnit(const Unit & unit);
     void drawParameters(int x, int y);

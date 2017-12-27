@@ -37,3 +37,20 @@ PlayerPtr AllPlayers::getPlayerPtr(const IDType & playerID, const IDType & type)
 	else if		(type == PlayerModels::Random)				{ return PlayerPtr(new Player_Random(playerID)); }
 	else													{ return PlayerPtr(new Player_NOKDPS(playerID)); }
 }
+
+std::string AllPlayers::getPlayerName(const IDType & type) {
+	if (type == PlayerModels::AttackClosest)		{ return "AttackClosest"; }
+	else if (type == PlayerModels::AttackDPS)			{ return "AttackDPS"; }
+	else if (type == PlayerModels::AttackWeakest)		{ return "AttackWeakest"; }
+	else if (type == PlayerModels::Kiter)				{ return "Kiter"; }
+	else if (type == PlayerModels::KiterDPS)			{ return "KiterDPS"; }
+
+	else if (type == PlayerModels::KiterDPSEvo)     { return "KiterDPSEvo"; }
+	else if (type == PlayerModels::NOKDPSEvo)     { return "NOKDPSEvo"; }
+
+	else if (type == PlayerModels::Kiter_NOKDPS)		{ return "Kiter_NOKDPS"; }
+	else if (type == PlayerModels::Cluster)		    	{ return "Cluster"; }
+	else if (type == PlayerModels::NOKDPS)              { return "NOKDPS"; }
+	else if (type == PlayerModels::Random)				{ return "Random"; }
+	else													{ return "NOKDPS"; }
+}

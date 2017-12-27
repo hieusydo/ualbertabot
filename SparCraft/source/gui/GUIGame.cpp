@@ -21,6 +21,8 @@ void GUIGame::onFrame()
     drawGame();
     drawHPBars();
 
+	bool drawUCTorAB = false;
+
     Timer turnTimer;
     turnTimer.start();
     if (!_game.gameOver())
@@ -37,19 +39,37 @@ void GUIGame::onFrame()
             { 
                 setParams(p, uct->getParams().getDescription());
                 setResults(p, uct->getResults().getDescription());
+				drawUCTorAB = true;
             }
 
             if (ab) 
             { 
                 setParams(p, ab->getParams().getDescription()); 
                 setResults(p, ab->results().getDescription());
+				drawUCTorAB = true;
             }
         }
     }
 
-    drawParameters(5, 15);
-    drawSearchResults(5, 150);
+	if (drawUCTorAB) {
+		drawParameters(5, 15);
+		drawSearchResults(5, 150);
+	}
+
     drawInfo();
+
+	drawPlayerName();
+}
+
+void GUIGame::drawPlayerName() {
+	Player* p0 = _game.getPlayer(0).get();
+	std::string p0name = AllPlayers::getPlayerName(p0->getType());
+
+	Player* p1 = _game.getPlayer(1).get();
+	std::string p1name = AllPlayers::getPlayerName(p1->getType());
+
+	GUITools::DrawString(Position(350, _gui.height() - 20), p0name, PlayerColors[0]);
+	GUITools::DrawString(Position(350, _gui.height()), p1name, PlayerColors[1]);
 }
 
 void GUIGame::drawInfo()
@@ -140,7 +160,7 @@ void GUIGame::drawParameters(int x, int y)
 
     for (size_t pp(0); pp < 2; ++pp)
     {
-        GUITools::DrawString(Position(x+pp*playerspacing, y), "Player 1 Settings", PlayerColors[pp]);
+        GUITools::DrawString(Position(x+pp*playerspacing, y), "Player Settings", PlayerColors[pp]);
 
         for (size_t p(0); _params[pp].size() > 0 && p<_params[pp][0].size(); ++p)
         {
@@ -186,7 +206,7 @@ void GUIGame::drawSearchResults(int x, int y)
 
     for (size_t pp(0); pp < 2; ++pp)
     {
-        GUITools::DrawString(Position(x+pp*playerspacing, y), "Player 1 Search Results", PlayerColors[pp]);
+        GUITools::DrawString(Position(x+pp*playerspacing, y), "Player Search Results", PlayerColors[pp]);
 
         for (size_t p(0); _results[pp].size() > 0 && p<_results[pp][0].size(); ++p)
         {
