@@ -1,4 +1,5 @@
 #include "SearchExperiment.h"
+#include "../Population_Kiter.h"
 
 using namespace SparCraft;
 
@@ -861,6 +862,20 @@ void SearchExperiment::runExperiment()
 
 	results << "   P1    P2    ST  UNIT       EVAL    RND           MS | UnitType PlayerID CurrentHP XPos YPos\n";
     
+	// Evolve if it's an Evo player
+	PlayerPtr p1 = PlayerPtr(players[0][0]);
+	PlayerPtr p2 = PlayerPtr(players[1][0]);
+	Player_KiterDPSEvo* p1Evo = dynamic_cast<Player_KiterDPSEvo *>(p1.get());
+	if (p1Evo) {
+		std::cout << "Starting offline evolution...\n";
+		size_t popSize = 10;
+		size_t numGen = 100;
+		Population_Kiter k = Population_Kiter(popSize, numGen);
+		size_t safeDist = k.evolveSafeDist(states[0], p1, p2);
+		//// Write result to a .txt file
+		std::cout << "Offline result: " << safeDist << "\n";
+	}
+
 	// for each player one player
 	for (size_t p1Player(0); p1Player < players[0].size(); p1Player++)
 	{

@@ -19,11 +19,13 @@ namespace SparCraft
 	{
 	private:
 		size_t _safeDist;
+		bool _offline;
 	public:
 		Player_KiterDPSEvo(const IDType & playerID);
 		//Player_KiterDPSEvo(const IDType & playerID, size_t safeDist);
 		void setSafeDist(size_t d);
 		size_t getSafeDist() const;
+		void switchOnOffline();
 		void getMoves(GameState & state, const MoveArray & moves, std::vector<Action> & moveVec);
 		IDType getType() { return PlayerModels::KiterDPSEvo; }
 	};

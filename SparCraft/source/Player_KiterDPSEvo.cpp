@@ -8,6 +8,7 @@ Player_KiterDPSEvo::Player_KiterDPSEvo (const IDType & playerID)
 {
 	_playerID = playerID;
 	_safeDist = 0; // default set it to 0, will set to random when initializing the population
+	_offline = false;
 }
 
 //Player_KiterDPSEvo::Player_KiterDPSEvo(const IDType & playerID, size_t safeDist) {
@@ -22,17 +23,20 @@ size_t Player_KiterDPSEvo::getSafeDist() const {
 	return _safeDist;
 }
 
+void Player_KiterDPSEvo::switchOnOffline() {
+	_offline = true;
+}
+
 void Player_KiterDPSEvo::getMoves(GameState & state, const MoveArray & moves, std::vector<Action> & moveVec)
 {
 	moveVec.clear();
 
-	// initialize population of safeDistances
-	size_t popSize = 10;
-	size_t numGen = 100;
-	Population_Kiter k = Population_Kiter(popSize, numGen);
+	if (_offline == false) {
+		std::ifstream ifs("best.txt");
+		if (!ifs) { std::cerr << "Error opening file\n"; }
+		ifs >> _safeDist;
+	}
 
-	size_t safeDist = k.evolveSafeDist(state);
-	//std::cout << "safeDist: " << safeDist << "\n";
 	for (IDType u = 0; u < moves.numUnits(); ++u)
 	{
 		bool foundAction = false;
@@ -106,11 +110,9 @@ void Player_KiterDPSEvo::getMoves(GameState & state, const MoveArray & moves, st
 		else
 		{
 			// Hieu's change
-			//Position ourPos = Position(ourUnit.x(), ourUnit.y());
-			size_t dist = ourUnit.getDistanceSqToUnit(closestUnit, state.getTime());
-			//std::cout << dist << " " << _safeDist << "\n";
-			// change for evo
-			if (dist < _safeDist && closestUnit.canAttackTarget(ourUnit, state.getTime())){
+			size_t dist = closestUnit.getDistanceSqToUnit(ourUnit, state.getTime());
+			
+			if (dist < pow(_safeDist, 2)){
 				bestMoveIndex = furthestMoveIndex;
 			}
 			// otherwise get back into the fight

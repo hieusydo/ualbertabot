@@ -6,14 +6,15 @@
 #include "Game.h"
 #include "Action.h"
 #include <memory>
+#include <queue>
 
 namespace SparCraft
 {
-	typedef std::pair<Player_KiterDPSEvo*, int> Chromosome;
+	typedef std::pair<size_t, int> Chromosome;
 
 	class KiterComparator {
 	public:
-		bool operator() (std::pair<Player_KiterDPSEvo*, int> lhs, std::pair<Player_KiterDPSEvo*, int> rhs) const;
+		bool operator() (Chromosome lhs, Chromosome rhs) const;
 	};
 
 	class Population_Kiter
@@ -24,23 +25,22 @@ namespace SparCraft
 		size_t _mu; 
 		size_t _lambda;
 
-		// is using heap too memory intensive?
-		std::vector<Player_KiterDPSEvo*> _populations;
+		std::priority_queue<Chromosome, std::vector<Chromosome>, KiterComparator> _genePool;
 
 	protected:
 		// initialize method for population of many KiterDPSEvo
-		void initialize();
+		void initialize(const GameState& state, PlayerPtr & p1, PlayerPtr & p2);
 
 		// mutate method
 		void mutate(Chromosome& c, const GameState & state);
 
 		// evaluation method
-		int Population_Kiter::eval(Player_KiterDPSEvo* kiter, const GameState & state);
+		int Population_Kiter::eval(Player_KiterDPSEvo* kiter, const GameState & state, PlayerPtr & p1, PlayerPtr & p2);
 
+		void printDist();
 	public:
 		Population_Kiter(size_t popSize, size_t numGen);
-		size_t evolveSafeDist(const GameState & state);
-		~Population_Kiter();
+		size_t evolveSafeDist(const GameState & state, PlayerPtr & p1, PlayerPtr & p2);
 	};
 
 }
