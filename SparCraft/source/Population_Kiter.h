@@ -13,7 +13,9 @@ namespace SparCraft
 	typedef std::pair<size_t, int> Chromosome;
 
 	class KiterComparator {
+        bool increasing;
 	public:
+        KiterComparator(bool i) : increasing(i) {}
 		bool operator() (Chromosome lhs, Chromosome rhs) const;
 	};
 
@@ -25,17 +27,18 @@ namespace SparCraft
 		size_t _mu; 
 		size_t _lambda;
 
-		std::priority_queue<Chromosome, std::vector<Chromosome>, KiterComparator> _genePool;
+		//std::priority_queue<Chromosome, std::vector<Chromosome>, KiterComparator> _genePool;
+        std::vector<Chromosome> _genePool;
 
 	protected:
 		// initialize method for population of many KiterDPSEvo
 		void initialize(const GameState& state, PlayerPtr & p1, PlayerPtr & p2);
 
 		// mutate method
-		void mutate(Chromosome& c, const GameState & state);
+        Chromosome mutate(const Chromosome& c, const GameState & state, PlayerPtr & p1, PlayerPtr & p2);
 
 		// evaluation method
-		int Population_Kiter::eval(Player_KiterDPSEvo* kiter, const GameState & state, PlayerPtr & p1, PlayerPtr & p2);
+		int Population_Kiter::eval(const GameState & state, PlayerPtr & p1, PlayerPtr & p2);
 
 		void printDist();
 	public:

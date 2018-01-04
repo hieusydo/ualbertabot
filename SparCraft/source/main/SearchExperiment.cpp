@@ -1,5 +1,6 @@
 #include "SearchExperiment.h"
 #include "../Population_Kiter.h"
+#include <fstream>
 
 using namespace SparCraft;
 
@@ -872,8 +873,12 @@ void SearchExperiment::runExperiment()
 		size_t numGen = 100;
 		Population_Kiter k = Population_Kiter(popSize, numGen);
 		size_t safeDist = k.evolveSafeDist(states[0], p1, p2);
-		//// Write result to a .txt file
+		// Write result to a .txt file
 		std::cout << "Offline result: " << safeDist << "\n";
+        std::ofstream best;
+        best.open("best.txt");
+        best << safeDist << "\n";
+        best.close();
 	}
 
 	// for each player one player
